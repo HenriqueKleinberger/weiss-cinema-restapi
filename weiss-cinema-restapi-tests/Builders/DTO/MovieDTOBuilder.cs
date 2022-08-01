@@ -7,9 +7,7 @@ namespace weiss_cinema_restapi_tests.Builders.DTO
     {
         private MovieDTO _movieDTO;
 
-        private int ImdbID;
         private string Title = "Movie Title";
-        private string Year = "1990";
         private string Poster = "Poster";
 
         public MovieDTOBuilder()
@@ -32,6 +30,18 @@ namespace weiss_cinema_restapi_tests.Builders.DTO
         public MovieDTOBuilder WithPoster(string poster)
         {
             _movieDTO.Poster = poster;
+            return this;
+        }
+
+        public MovieDTOBuilder WithYear(string year)
+        {
+            _movieDTO.Year = year;
+            return this;
+        }
+
+        public MovieDTOBuilder WithImdbId(string imdbId)
+        {
+            _movieDTO.ImdbID = imdbId;
             return this;
         }
 

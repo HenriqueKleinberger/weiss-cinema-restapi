@@ -33,7 +33,7 @@ namespace weiss_cinema_restapi.Services.OMDB
         public async Task<MoviesResponseDTO> GetMoviesAsync(string title, int page)
         {
             _response = await _omdbService.GetAsync($"?apikey={_apiKey}&s={title}*&page={page}");
-            OMDBMovieResponse omdbResponse = ParseResponse<OMDBMovieResponse>();
+            OMDBMoviesResponse omdbResponse = ParseResponse<OMDBMoviesResponse>();
             return omdbResponse.ToMovieResponseDTO();
         }
 

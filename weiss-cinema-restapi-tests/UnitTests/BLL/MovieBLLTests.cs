@@ -10,14 +10,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace weiss_cinema_restapi_tests.UnitTests.BLL
 {
     [TestClass]
-    public class MovieBLLTests
+    public class OMDBMovieServiceTests
     {
         private MovieBLL _movieBLL;
 
         private readonly Mock<ILogger<MovieBLL>> _loggerMock;
         private readonly Mock<IOMDBMovieService> _omdbMovieServiceMock;
 
-        public MovieBLLTests()
+        public OMDBMovieServiceTests()
         {
             _loggerMock = new Mock<ILogger<MovieBLL>>();
             _omdbMovieServiceMock = new Mock<IOMDBMovieService>();

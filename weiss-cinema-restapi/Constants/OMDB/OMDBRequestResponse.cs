@@ -3,5 +3,6 @@
     public static class OMDBRequestResponse
     {
         public const String TRUE = "True";
+        public const String FALSE = "False";
     }
 }

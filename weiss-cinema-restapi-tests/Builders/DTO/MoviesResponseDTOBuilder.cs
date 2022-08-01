@@ -42,6 +42,12 @@ namespace weiss_cinema_restapi_tests.Builders.DTO
             return this;
         }
 
+        public MoviesResponseDTOBuilder WithTotalResults(int totalResults)
+        {
+            _moviesResponseDTO.TotalResults = totalResults;
+            return this;
+        }
+
         public MoviesResponseDTO Build()
         {
             return _moviesResponseDTO;

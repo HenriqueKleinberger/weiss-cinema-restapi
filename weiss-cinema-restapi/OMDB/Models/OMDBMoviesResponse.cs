@@ -1,6 +1,6 @@
 ﻿namespace weiss_cinema_restapi.OMDB.Models
 {
-    public class OMDBMovieResponse : OMDBBaseResponse
+    public class OMDBMoviesResponse : OMDBBaseResponse
     {
         public List<OMDBMovie> Search { get; set; }
         public String TotalResults { get; set; }

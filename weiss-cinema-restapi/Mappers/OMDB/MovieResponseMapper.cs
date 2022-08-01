@@ -6,7 +6,7 @@ namespace weiss_cinema_restapi.Mappers.OMDB
 {
     public static class MovieResponseMapper
     {
-        public static MoviesResponseDTO ToMovieResponseDTO(this OMDBMovieResponse omdbMovieResponse)
+        public static MoviesResponseDTO ToMovieResponseDTO(this OMDBMoviesResponse omdbMovieResponse)
         {
             if (omdbMovieResponse.IsSuccessful()) {
                 MoviesResponseDTO movieResponseDTO = new MoviesResponseDTO()
