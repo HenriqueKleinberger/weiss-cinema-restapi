@@ -1,4 +1,5 @@
 
+using weiss_cinema_restapi.Constants.OMDB;
 using weiss_cinema_restapi.DTO;
 using weiss_cinema_restapi.OMDB.Models;
 
@@ -18,7 +19,7 @@ namespace weiss_cinema_restapi.Mappers.OMDB
                     ImdbRating = omdbMovieDetails.imdbRating,
                     Plot = omdbMovieDetails.Plot,
                     ReleaseDate = omdbMovieDetails.ReleaseDate,
-                    Website = "https://www.globo.com/",
+                    Website = omdbMovieDetails.Website == OMDBRequestResponse.NOT_AVAILABLE ? null : omdbMovieDetails.Website,
                     ImdbID = omdbMovieDetails.ImdbID,
                     Poster = omdbMovieDetails.Poster,
                     Title = omdbMovieDetails.Title,

@@ -24,17 +24,30 @@ namespace weiss_cinema_restapi.Services.OMDB
 
         public async Task<MovieDetailsResponseDTO> GetMovieDetailsAsync(string imdbId)
         {
-            _response = await _omdbService.GetAsync($"?apikey={_apiKey}&i={imdbId}");
-            OMDBMovieDetailsResponse movieDetails = ParseResponse<OMDBMovieDetailsResponse>();
-            return movieDetails.ToMovieDetailsResponseDTO();
+            try
+            {
+                _response = await _omdbService.GetAsync($"?apikey={_apiKey}&i={imdbId}");
+                OMDBMovieDetailsResponse movieDetails = ParseResponse<OMDBMovieDetailsResponse>();
+                return movieDetails.ToMovieDetailsResponseDTO();
+            } catch (Exception exception)
+            {
+                throw new OMDBServiceException(exception.Message);
+            }
                 
         }
 
         public async Task<MoviesResponseDTO> GetMoviesAsync(string title, int page)
         {
-            _response = await _omdbService.GetAsync($"?apikey={_apiKey}&s={title}*&page={page}");
-            OMDBMoviesResponse omdbResponse = ParseResponse<OMDBMoviesResponse>();
-            return omdbResponse.ToMovieResponseDTO();
+            try
+            {
+                _response = await _omdbService.GetAsync($"?apikey={_apiKey}&s={title}*&page={page}");
+                OMDBMoviesResponse omdbResponse = ParseResponse<OMDBMoviesResponse>();
+                return omdbResponse.ToMovieResponseDTO();
+            }
+            catch (Exception exception)
+            {
+                throw new OMDBServiceException(exception.Message);
+            }
         }
 
         private void ValidateResponse()

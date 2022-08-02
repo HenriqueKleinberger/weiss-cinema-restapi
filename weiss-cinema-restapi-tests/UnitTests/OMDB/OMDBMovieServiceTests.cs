@@ -1,6 +1,4 @@
-using Microsoft.Extensions.Logging;
 using Moq;
-using weiss_cinema_restapi.BLL;
 using weiss_cinema_restapi.OMDB.Services.Interfaces;
 using weiss_cinema_restapi.DTO;
 using weiss_cinema_restapi_tests.Builders.DTO;
@@ -17,6 +15,7 @@ using Newtonsoft.Json;
 using weiss_cinema_restapi_tests.Builders.OMDB;
 using System;
 using System.Collections.Generic;
+using weiss_cinema_restapi.Exceptions;
 
 namespace weiss_cinema_restapi_tests.UnitTests.OMDB
 {
@@ -88,7 +87,31 @@ namespace weiss_cinema_restapi_tests.UnitTests.OMDB
             AssertEqualMoviesResponseDTO(expectedMoviesResponseDTO, actualMoviesResponseDTO);
         }
 
-        
+        [TestMethod]
+        public async Task WhenOMDBReturnsError_ThenShouldThrowOMDBServiceException()
+        {
+            //Arrange
+            string title = "Title";
+            int page = 1;
+            string errorMessage = "error";
+
+            _omdbServiceMock
+                 .Setup(s => s.GetAsync($"?apikey={API_KEY}&s={title}*&page={page}"))
+                .Throws(new Exception(errorMessage));
+
+            //Act
+            _omdbMovieService = new OMDBMovieService(_configuration, _omdbServiceMock.Object);
+
+            try
+            {
+                MoviesResponseDTO actualMoviesResponseDTO = await _omdbMovieService.GetMoviesAsync(title, page);
+            } catch (OMDBServiceException exception)
+            {
+                Assert.AreEqual(errorMessage, exception.Message);
+            }
+
+            //Assert
+        }
 
         private void AssertEqualMoviesResponseDTO(MoviesResponseDTO expectedMoviesResponseDTO, MoviesResponseDTO actualMoviesResponseDTO)
         {

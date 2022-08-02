@@ -4,5 +4,6 @@
     {
         public const String TRUE = "True";
         public const String FALSE = "False";
+        public const String NOT_AVAILABLE = "N/A";
     }
 }

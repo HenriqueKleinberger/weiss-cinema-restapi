@@ -6,6 +6,7 @@ using weiss_cinema_restapi.DTO;
 using weiss_cinema_restapi_tests.Builders.DTO;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using weiss_cinema_restapi.Exceptions;
 
 namespace weiss_cinema_restapi_tests.UnitTests.BLL
 {
@@ -43,7 +44,28 @@ namespace weiss_cinema_restapi_tests.UnitTests.BLL
             AssertEqualMoviesResponseDTO(expectedMoviesResponseDTO, actualMoviesResponseDTO);
         }
 
-        
+        [TestMethod]
+        public async Task WhenOMDBServiceReturnsError_ThenShouldReturnErrorResponse()
+        {
+            //Arrange
+            string title = "Title";
+            int page = 1;
+            string errorMessage = "error";
+
+            _omdbMovieServiceMock
+                .Setup(s => s.GetMoviesAsync(title, page))
+                .Throws(new OMDBServiceException(errorMessage));
+
+            //Act
+            _movieBLL = new MovieBLL(_loggerMock.Object, _omdbMovieServiceMock.Object);
+            MoviesResponseDTO actualMoviesResponseDTO = await _movieBLL.GetMoviesAsync(title, page);
+
+            //Assert
+            Assert.IsFalse(actualMoviesResponseDTO.IsSuccessful);
+            Assert.AreEqual(errorMessage, actualMoviesResponseDTO.Message);
+        }
+
+
 
         private void AssertEqualMoviesResponseDTO(MoviesResponseDTO expectedMoviesResponseDTO, MoviesResponseDTO actualMoviesResponseDTO)
         {
